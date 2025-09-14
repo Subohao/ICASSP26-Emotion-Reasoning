@@ -55,7 +55,7 @@
 <body>
   <header>
     <div class="wrap">
-      <h1>Reasoning Comparisons — RBMV vs. Qwen2Audio‑CoT vs. Qwen2.5‑Omni‑CoT</h1>
+      <h1>Reasoning Comparisons — Our Model vs. Qwen2Audio‑CoT vs. Qwen2.5‑Omni‑CoT</h1>
       <div class="sub">Text‑only demo page for comparing predicted labels and rationales (open/closed form) with majority vs annotator‑aware scoring.</div>
       <div class="controls">
         <select id="dataset" title="Dataset" style="grid-column: span 3;">
@@ -66,8 +66,8 @@
           <option value="closed">Closed‑form</option>
         </select>
         <select id="scoring" title="Scoring" style="grid-column: span 3;">
-          <option value="mv">Majority (plurality label)</option>
-          <option value="aa">Annotator‑aware (any annotator)</option>
+          <option value="mv">Majority Voted Labels (MV-labels)</option>
+          <option value="aa">Annotator‑aware Labels (All-labels)</option>
         </select>
         <input id="q" type="search" placeholder="Search transcript / rationale / id…" style="grid-column: span 3;" />
         <div class="group" style="grid-column: span 12; justify-content: space-between;">
@@ -88,15 +88,15 @@
   <script type="application/json" id="demo-data">
   {
     "models": [
-      {"key": "our", "name": "RBMV (ours)"},
+      {"key": "our", "name": "Our Model"},
       {"key": "q2audio", "name": "Qwen2Audio‑CoT"},
       {"key": "q2_5omni", "name": "Qwen2.5‑Omni‑CoT"}
     ],
     "samples": [
       {
-        "id": "MSP_0001",
+        "id": "MSP-PODCAST_0217_0223",
         "dataset": "MSP‑Podcast v1.12",
-        "transcript": "Yeah… it’s fine, I guess. I’ll redo it later if that’s what you want.",
+        "transcript": "the beard, going on. and he was actually one of the founders of 4chan.",
         "majority": "neutral",
         "annotators": ["neutral","sad","frustration"],
         "pred": {
