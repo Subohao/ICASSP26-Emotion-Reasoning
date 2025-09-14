@@ -137,6 +137,22 @@
     const state = { mode: 'open', scoring: 'mv', dataset: 'all', q: '', showTranscript: true, showRationales: true };
 
     const data = JSON.parse(document.getElementById('demo-data').textContent);
+
+    function normLabel(s) {
+      return String(s)
+        .toLowerCase()
+        .replace(/^other[-\s]*/,'')  // map "Other-Amused" -> "amused" (tweak if you want to keep "other" distinct)
+        .replace(/\*.*$/,'')         // drop counts, e.g., "*3"
+        .trim();
+    }
+  
+    function isCorrect(predLabel, sample){
+      const p = normLabel(predLabel);
+      if (state.scoring === 'mv') return p === normLabel(sample.majority);
+      const annotSet = new Set(sample.annotators.map(normLabel));
+      return annotSet.has(p);
+    }
+    
     const cardsEl = document.getElementById('cards');
     const scoreboardEl = document.getElementById('scoreboard');
 
@@ -164,11 +180,11 @@
       return data.samples.filter(s => (state.dataset==='all' || s.dataset===state.dataset) && matchesQuery(s));
     }
 
-    function isCorrect(predLabel, sample){
-      if(state.scoring === 'mv') return predLabel === sample.majority;
-      // annotator-aware: any match in annotators set
-      return sample.annotators.includes(predLabel);
-    }
+    // function isCorrect(predLabel, sample){
+    //   if(state.scoring === 'mv') return predLabel === sample.majority;
+    //   // annotator-aware: any match in annotators set
+    //   return sample.annotators.includes(predLabel);
+    // }
 
     function computeScores(samples){
       const scores = {};
