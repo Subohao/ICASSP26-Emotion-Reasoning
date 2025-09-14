@@ -55,18 +55,19 @@
 <body>
   <header>
     <div class="wrap">
-      <h1>Reasoning Comparisons — Our Model vs. Qwen2Audio‑CoT vs. Qwen2.5‑Omni‑CoT</h1>
-      <div class="sub">Text‑only demo page for comparing predicted labels and rationales (open form) with majority vs annotator‑aware scoring.</div>
+      <h1>Reasoning Comparisons — RBMV vs. Qwen2Audio‑CoT vs. Qwen2.5‑Omni‑CoT</h1>
+      <div class="sub">Text‑only demo page for comparing predicted labels and rationales (open/closed form) with majority vs annotator‑aware scoring.</div>
       <div class="controls">
         <select id="dataset" title="Dataset" style="grid-column: span 3;">
           <option value="all">All datasets</option>
         </select>
         <select id="mode" title="Output mode" style="grid-column: span 3;">
           <option value="open">Open‑form</option>
+          <option value="closed">Closed‑form</option>
         </select>
         <select id="scoring" title="Scoring" style="grid-column: span 3;">
-          <option value="mv">Majority Labels(MV-Labels)</option>
-          <option value="aa">Annotator‑aware Labels(All-Labels)</option>
+          <option value="mv">Majority (plurality label)</option>
+          <option value="aa">Annotator‑aware (any annotator)</option>
         </select>
         <input id="q" type="search" placeholder="Search transcript / rationale / id…" style="grid-column: span 3;" />
         <div class="group" style="grid-column: span 12; justify-content: space-between;">
@@ -87,21 +88,21 @@
   <script type="application/json" id="demo-data">
   {
     "models": [
-      {"key": "our", "name": "Our Model"},
+      {"key": "our", "name": "RBMV (ours)"},
       {"key": "q2audio", "name": "Qwen2Audio‑CoT"},
       {"key": "q2_5omni", "name": "Qwen2.5‑Omni‑CoT"}
     ],
     "samples": [
       {
-        "id": "MSP-PODCAST_0217_0223",
+        "id": "MSP_0001",
         "dataset": "MSP‑Podcast v1.12",
-        "transcript": "the beard, going on. and he was actually one of the founders of 4chan",
-        "majority": "Neutral",
-        "annotators": ["Neutral","Other-Amused","Happy"],
+        "transcript": "Yeah… it’s fine, I guess. I’ll redo it later if that’s what you want.",
+        "majority": "neutral",
+        "annotators": ["neutral","sad","frustration"],
         "pred": {
-          "our": {"open": {"label": "Neutral", "rationale": "The speaker is talking about a person who was a founder of 4chan. I think the emotion is neutral. The tone seems to be neutral, not overly excited or angry. The pitch doesn't seem to fluctuate much, indicating a calm delivery. There's no indication of strong emotions like surprise or contempt in the way the words are spoken. The clarity of the speech is good, so it's easy to understand what's being said. Overall, the speaker seems to be just stating a fact without showing any particular strong emotion."},
-          "q2audio": {"open": {"label": "Neutral", "rationale": "1. The speech content is\"beard going on good and he was actually one of the founders of four chan.\" The content seems to be related to a person's beard and their involvement with a website called \"four chan\".<br>2. The speaker has a neutral tone and a neutral pitch. There are no specific intonations or stress patterns that suggest any particular emotion.<br>3. Based on the content and delivery, the speaker appears to be factual and neutral, without any strong emotional expression.<br>So I think the emotion is neutral."},
-          "q2_5omni": {"open": {"label": "Neutral", "rationale": "1. Transcribing the speech content and considering the meaning:<br>The speaker is talking about someone having a beard and mentions that this person was one of the founders of 4chan.<br><br>2. Considering speech clues:<br>- The speaker uses a neutral and matter-of-fact tone.<br>- The speech is delivered at a moderate speed without any dramatic inflections.<br>- There are no pauses or dramatic pauses for emphasis.<br><br>3. Identifying the emotion:<br>Given the neutral tone and lack of any dramatic or emotional cues, the emotion expressed in the speech is likely neutral or calm.<br>Final Answer: So I think the emotion is neutral."}}
+          "our": {"open": {"label": "frustration", "rationale": "The speaker is talking about a person who was a founder of 4chan. The tone seems to be neutral, not overly excited or angry. The pitch doesn't seem to fluctuate much, indicating a calm delivery. There's no indication of strong emotions like surprise or contempt in the way the words are spoken. The clarity of the speech is good, so it's easy to understand what's being said. Overall, the speaker seems to be just stating a fact without showing any particular strong emotion. So, I think the emotion is neutral."}, "closed": {"label": "frustration", "rationale": "Low energy, shallow intonation; reluctant phrasing."}},
+          "q2audio": {"open": {"label": "neutral", "rationale": "No explicit affect; plain statement."}, "closed": {"label": "neutral", "rationale": "Even tone."}},
+          "q2_5omni": {"open": {"label": "sad", "rationale": "Soft voice; downward inflection suggests disappointment."}, "closed": {"label": "sad", "rationale": "Muted delivery; discouraged wording."}}
         }
       },
       {
@@ -111,9 +112,9 @@
         "majority": "angry",
         "annotators": ["angry","frustration"],
         "pred": {
-          "our": {"open": {"label": "angry", "rationale": "Raised intensity, fast rate, emphatic \"come on\"."}},
-          "q2audio": {"open": {"label": "frustration", "rationale": "Complaint framing; exasperation."}},
-          "q2_5omni": {"open": {"label": "angry", "rationale": "Harsh stress on \"hundred\"; clipped consonants."}}
+          "our": {"open": {"label": "angry", "rationale": "Raised intensity, fast rate, emphatic \"come on\"."}, "closed": {"label": "angry", "rationale": "High energy and sharp onsets."}},
+          "q2audio": {"open": {"label": "frustration", "rationale": "Complaint framing; exasperation."}, "closed": {"label": "frustration", "rationale": "Irritated tone."}},
+          "q2_5omni": {"open": {"label": "angry", "rationale": "Harsh stress on \"hundred\"; clipped consonants."}, "closed": {"label": "angry", "rationale": "Strong emphasis; tense articulation."}}
         }
       },
       {
@@ -123,9 +124,9 @@
         "majority": "happy",
         "annotators": ["happy","neutral"],
         "pred": {
-          "our": {"open": {"label": "happy", "rationale": "Upward contour, bright timbre; positive semantics."}},
-          "q2audio": {"open": {"label": "neutral", "rationale": "Polite statement."}},
-          "q2_5omni": {"open": {"label": "happy", "rationale": "Warm tone; appreciative wording."}}
+          "our": {"open": {"label": "happy", "rationale": "Upward contour, bright timbre; positive semantics."}, "closed": {"label": "happy", "rationale": "Smiling voice; quick tempo."}},
+          "q2audio": {"open": {"label": "neutral", "rationale": "Polite statement."}, "closed": {"label": "neutral", "rationale": "Even tone."}},
+          "q2_5omni": {"open": {"label": "happy", "rationale": "Warm tone; appreciative wording."}, "closed": {"label": "happy", "rationale": "Light, energetic delivery."}}
         }
       }
     ]
