@@ -80,7 +80,7 @@
   <main class="wrap">
     <div class="scoreboard" id="scoreboard"></div>
     <div class="cards" id="cards"></div>
-    <div class="footer">This page is text‑only and static (no external libraries). Edit the JSON block at the bottom to add/remove samples or models. Scoring: Majority uses the corpus plurality label; Annotator‑aware (AA) counts a prediction correct if it matches any annotator label.</div>
+    <div class="footer">This page is text‑only and static (no external libraries). Edit the JSON block at the bottom to add/remove samples or models. Scoring: Majority uses the corpus plurality label; Annotator‑aware (All) counts a prediction correct if it matches any annotator label.</div>
   </main>
 
   <!-- ===================== DATA (Edit this block) ===================== -->
@@ -223,7 +223,7 @@
           <strong>${s.id}</strong> <span class="sep">·</span> <span class="muted">${s.dataset}</span>
           <div class="badges" style="margin-top:6px;">
             <span class="badge">MV: <span class="label">${s.majority}</span></span>
-            <span class="badge">All/AA: <span class="label">${[...new Set(s.annotators)].join(', ')}</span></span>
+            <span class="badge">All: <span class="label">${[...new Set(s.annotators)].join(', ')}</span></span>
           </div>
         </div>
         <div class="badges">
