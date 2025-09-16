@@ -57,6 +57,30 @@
     <div class="wrap">
       <h1>Reasoning Comparisons — Our Model vs. Qwen2Audio‑CoT vs. Qwen2.5‑Omni‑CoT</h1>
       <div class="sub">Text‑only demo page for comparing predicted labels and rationales (open/closed form) with majority vs annotator‑aware scoring. </div>
+      <div class="sub"><em>Emotion Extraction Prompt</em> below:
+        <pre><code>
+          You are an expert in emotion and answer extraction.
+          Your task is to extract the emotion answer from the model prediction.
+          The answer must be presented in the model prediction and only one emotion should be extracted.
+          Do not provide any explanation and do not add your comments on the prediction.
+          
+          Model Prediction: {$model_pred}
+          
+          Return the emotion answer in the model prediction, if the model fails to predict the emotion, return "None".
+      
+          Answer:
+        </code></pre></div>
+      <div class="sub"><em>Emotion Grouping Prompt</em> below:
+        <pre><code>
+          You are an expert in emotion theory. According to emotion wheel and related theory, 
+          group the following emotion to the following eight emotion categories: 
+          [Angry, Sad, Happy, Surprise, Fear, Disgust, Contempt, Neutral], 
+          if you think it's not an emotion or can not be grouped into these categories, but it in Others. 
+          The output should be a json with emotion category as key, and all emotions in this group as values. 
+          Input:
+
+          $ALL_EMOTIONS_EXTRACTED
+        </code></pre></div>
       <div class="sub"><em>Win-Rate Prompt</em> for pairwise judging below: 
         
         <pre><code>## Instructions:
