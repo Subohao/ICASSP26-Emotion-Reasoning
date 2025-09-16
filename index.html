@@ -56,38 +56,33 @@
   <header>
     <div class="wrap">
       <h1>Reasoning Comparisons — Our Model vs. Qwen2Audio‑CoT vs. Qwen2.5‑Omni‑CoT</h1>
-      <div class="sub">Text‑only demo page for comparing predicted labels and rationales (open/closed form) with majority vs annotator‑aware scoring. Includes a reusable <em>Win-Rate Prompt</em> for pairwise judging: \#\# Instructions:
+      <div class="sub">Text‑only demo page for comparing predicted labels and rationales (open/closed form) with majority vs annotator‑aware scoring. Includes a reusable <em>Win-Rate Prompt</em> for pairwise judging below: 
+        
+        <pre><code>## Instructions:
 
 You are an impartial adjudicator for speech-emotion reasoning. Given the inputs and two anonymous candidates (A, B), score each, pick a winner (or Tie), and return only the JSON schema below.
 
-\#\#Inputs:
+## Inputs:
 
     - Audio
+    - Reasoning A: {pred_reasoning1}
+    - Reasoning B: {pred_reasoning2}
 
-    - Reasoning A: \{pred\_reasoning1\}
-    
-    - Reasoning B: \{pred\_reasoning2\}
-
-\#\# Evaluate Criteria:
+## Evaluate Criteria:
 
 1. Audio Grounding: Uses concrete acoustic/prosodic evidence (pitch/energy/tempo/pauses/timbre) tied to the audio.
-
-2. Coherence \& correctness: Internally consistent; no hallucinations (e.g., inventing content not in audio/transcript).
-
+2. Coherence & correctness: Internally consistent; no hallucinations (e.g., inventing content not in audio/transcript).
 3. Specificity vs. Vagueness
 
-\#\# Output Format:
+## Output Format:
 
 ```json
-\{\{
-
-    "winner": "A $|$ B $|$ Tie",
-    
-    "rationale\_short": "$<$1-2 sentences comparing A vs B$>$",
-    
-    "flags": ["missing\_audio" $|$ "low\_evidence" $|$ "hallucination\_A" $|$ "hallucination\_B"]
-    
-\}\}.```</div>
+{{
+    "winner": "A | B | Tie",
+    "rationale_short": "<1-2 sentences comparing A vs B>",
+    "flags": ["missing_audio" | "low_evidence" | "hallucination_A" | "hallucination_B"]
+}}
+```</code></pre></div>
       <div class="controls">
         <select id="dataset" title="Dataset" style="grid-column: span 3;">
           <option value="all">All datasets</option>
